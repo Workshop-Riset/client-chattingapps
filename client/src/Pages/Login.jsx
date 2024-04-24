@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../Features/clientSlice";
 import { useNavigate } from "react-router-dom";
+import socket from "../socket";
+
 
 export default function Login() {
   const dispatch = useDispatch()
@@ -24,6 +26,15 @@ export default function Login() {
     event.preventDefault()
     dispatch(login(user, navigate))
   }
+
+  // useEffect(()=> {
+  //   socket.on("connect", () => {
+  //       console.log(socket.id);
+  //   })
+
+  //   socket.connect()
+  //   }, [])
+  
   return (
     <div className="flex bg-orange-400 p-20 rounded-2xl mt-5">
       <form onSubmit={loginUser} className="max-w-sm mx-auto">

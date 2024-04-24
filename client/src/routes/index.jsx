@@ -9,10 +9,9 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path:"/chat",
-    element:<ChatPage/>
-  }
-],
-);
+    path: "/chat",
+    element: <ChatPage />,
+  },
+]);
 
 export default router;
