@@ -46,9 +46,8 @@ const router = createBrowserRouter([
     element: <Login />,
     loader : GuardNavigation
   },
-  {
     path:"/register",
-    element:<RegisterPage/>,
+    element:<Register/>,
     loader : GuardNavigation
   }
 ],
