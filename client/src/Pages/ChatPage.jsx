@@ -12,6 +12,10 @@ export default function ChatPage() {
         <ChatBubbleRight />
         <ChatBubbleLeft />
         <ChatBubbleRight />
+        <div className="flex gap-4">
+            <input className="flex w-80 h-10 rounded-xl" type="text" />
+            <button className=" h-10 items-center"> Send </button>
+        </div>
       </div>
       <div className="flex flex-col w-1/4 bg-red-400 items-center rounded-2xl p-5 gap-5">
         Profile
