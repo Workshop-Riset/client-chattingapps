@@ -57,7 +57,7 @@ export default function Register() {
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center">
       <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
-        <div className="md:w-1/2 px-8 md:px-16">
+        <div className="md:w-1/2 px-8 md:px-16 flex flex-col justify-center">
           <h2 className="font-bold text-2xl text-[#002D74]">Register</h2>
           <p className="text-xs mt-4 text-[#002D74]">Create a new account</p>
 
@@ -105,8 +105,8 @@ export default function Register() {
           </div>
         </div>
 
-        <div className="md:block hidden w-1/2">
-          <img className="rounded-2xl" src="https://images.unsplash.com/photo-1616606103915-dea7be788566?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80" alt="login"/>
+        <div className="md:w-1/2 md:block hidden">
+          <img className="rounded-2xl" src="https://img.freepik.com/free-vector/hand-drawn-chat-mobile-pattern_52683-713.jpg?size=626&ext=jpg&ga=GA1.1.1419428133.1713336177&semt=ais" alt="login"/>
         </div>
       </div>
     </section>
