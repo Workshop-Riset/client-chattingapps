@@ -18,7 +18,7 @@ export const {setClient} = clientSlice.actions
 
 export const login = (user, navigate) => {
     return async (dispatch) => {
-        console.log(user,`<<< udah masuk slice`);
+        // console.log(user,`<<< udah masuk slice`);
         try {
             const response = await axios({
                 method:"post",
@@ -33,6 +33,7 @@ export const login = (user, navigate) => {
               })
 
             // console.log(response);
+            // dispatch(setClient())
             localStorage.setItem("access_token", response.data.accessToken)
             
             navigate("/chat")

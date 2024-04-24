@@ -1,20 +1,12 @@
 import ChatBubbleLeft from "../Components/ChatBubble-1";
 import ChatBubbleRight from "../Components/ChatBubbleRight";
-import Friends from "../Components/Friends";
+import FriendList from "../Components/FriendList";
 
 export default function ChatPage() {
+
   return (
-    <div className="flex w-screen h-screen justify-center items-center mt-10 gap-4 bg-orange-200 ">
-      <div className="flex flex-col bg-red-400 items-center p-2 justify-center w-1/4 gap-6 rounded-2xl">
-        <div className="flex flex-col bg-blue-400 w-56 items-center  rounded-2xl p-5">
-          Friend
-        </div>
-        <div className="flex flex-col gap-2">
-          <Friends />
-          <Friends />
-          <Friends />
-        </div>
-      </div>
+    <div className="flex w-screen h-screen justify-center items-center mt-10 gap-4 bg-gray-300">
+      <FriendList />
       <div className="flex flex-col w-2/5 bg-red-400 items-center rounded-2xl p-5">
         <ChatBubbleLeft />
         <ChatBubbleRight />
