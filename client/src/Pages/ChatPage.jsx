@@ -14,6 +14,11 @@ export default function ChatPage() {
   
   useEffect(() => {
     socket.connect();
+
+    socket.on("fetchMessage", () => {
+        dispatch(myConversation());
+    })
+    
   }, []);
 
   useEffect(() => {

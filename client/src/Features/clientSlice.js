@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from '../config/instance'
 import Swal from 'sweetalert2'
+import socket from '../socket'
+
 
 export const clientSlice = createSlice({
     name:"client",
@@ -62,6 +64,10 @@ export const sendMessage = (message) => {
                     Authorization:"Bearer " + localStorage.getItem("access_token")
                 }
             })
+
+            //socket.emit supaya server tahu kaapn kasih tau kesemuanya
+
+            socket.emit("newMessage")
 
             console.log(data,`pesan di slice`);
 
