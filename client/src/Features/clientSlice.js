@@ -66,20 +66,16 @@ export const sendMessage = (message, user) => {
                 },
             });
 
-            if (response.data) {
-                // If data is present in the response, handle it accordingly
-                console.log("Data received from server:", response.data);
-            } else {
-                console.log("No data received from server");
-            }
+            console.log(user.conversationId,`<<< setelah kirim`);
 
-            // Emit event to notify server about the new message
             socket.emit("newMessage", localStorage.getItem("access_token"));
-
-            // Optionally, you can dispatch an action or handle the response data here
         } catch (error) {
-            console.error("Error in sendMessage:", error);
-            // Optionally, dispatch an action or show an error message to the user
+            Swal.fire({
+                title: 'Error!',
+                text: error.response.data.message,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
         }
     };
 };
