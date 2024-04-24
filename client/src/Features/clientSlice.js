@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from '../config/instance'
-
+import Swal from 'sweetalert2'
 
 export const clientSlice = createSlice({
     name:"client",
@@ -18,17 +18,31 @@ export const {setClient} = clientSlice.actions
 
 export const login = (user, navigate) => {
     return async (dispatch) => {
+        console.log(user,`<<< udah masuk slice`);
         try {
             const response = await axios({
                 method:"post",
                 url:"/login",
-                data: "user"
+                data: user
             })
+            Swal.fire({
+                title: 'Success Login!',
+                text: "Success Login",
+                icon: 'success',
+                confirmButtonText: 'Ok'
+              })
 
-            console.log(response);
-            localStorage.setItem("access_token", response.data.access_token)
+            // console.log(response);
+            localStorage.setItem("access_token", response.data.accessToken)
+            
+            navigate("/chat")
         } catch (error) {
-            console.log(error);
+            Swal.fire({
+                title: 'Error!',
+                text: error.response.data.message,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
         }
     }
 }

@@ -1,32 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import { login } from "../Features/clientSlice";
-// import { useNavigate } from "react-router-dom";
+import { login } from "../Features/clientSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const dispatch = useDispatch()
-    // const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-    const [user, setUser] = useState({
-        email:"",
-        password:""
-    })
+  const [user, setUser] = useState({
+      email:"",
+      password:""
+  })
 
-    const inputHandler = async(event) => {
-        const {name, value} = event.target
-        setUser({
-            ...user,
-            [name]:value
-        })
-    }
+  const inputHandler = async(event) => {
+      const {name, value} = event.target
+      setUser({
+          ...user,
+          [name]:value
+      })
+  }
 
-    // useEffect(()=>{
-    //     dispatch(login(user, ))e
-    // },[]) // belum bisa connect
-    
+  const loginUser = (event)=> {
+    event.preventDefault()
+    dispatch(login(user, navigate))
+  }
   return (
     <div className="flex bg-orange-400 p-20 rounded-2xl mt-5">
-      <form className="max-w-sm mx-auto">
+      <form onSubmit={loginUser} className="max-w-sm mx-auto">
         <div className="mb-5">
           <label
             htmlFor="email"
@@ -38,6 +38,8 @@ export default function Login() {
             type="email"
             id="email"
             name="email"
+            onChange={inputHandler}
+            value={user.email}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg h-10"
             required
           />
@@ -52,6 +54,8 @@ export default function Login() {
           <input
             type="password"
             name="password"
+            value={user.password}
+            onChange={inputHandler}
             id="password"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg h-10"
             required

@@ -1,6 +1,6 @@
 export default function Navbar() {
   return (
-    <div>
+    <div className=" flex justify-center ">
       <nav className="bg-gray-900 border-gray-200">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a>
