@@ -8,6 +8,10 @@ import { myConversation, sendMessage } from "../Features/clientSlice";
 
 export default function ChatPage() {
   const [message, setMessage] = useState("");
+  const [clientUser, setClientUser] = useState()
+
+  console.log(clientUser, `di chatpage yang login`);
+
   const dispatch = useDispatch();
 
   const dataPercakapan = useSelector((state) => state.client.list);
@@ -15,20 +19,31 @@ export default function ChatPage() {
   useEffect(() => {
     socket.connect();
 
-    socket.on("fetchMessage", () => {
-        dispatch(myConversation());
-    })
-    
+    //pertama setelah buka page
+    socket.on("startConversation", () => {
+      let token = localStorage.getItem("access_token");
+
+      socket.emit("goConversation", token);
+    });
+
+    socket.on("runConversation", async (user) => {
+        console.log(user.conversationId, `<< ini conv id`, user.receiverId, `<< receiver id`);
+        setClientUser(user)
+        dispatch(myConversation(user.conversationId))
+    });
+
+    // dari server fetch setelah kirim pesann
+    socket.on("fetchMessage", (user) => {
+        dispatch(myConversation(user.conversationId));
+      });
+  
   }, []);
 
-  useEffect(() => {
-    dispatch(myConversation());
-  }, []);
 
-  const sendHandler = async (event) => {
-    event.preventDefault()
-    dispatch(sendMessage(message));
-  };
+const sendHandler = async (event) => {
+    event.preventDefault();
+    dispatch(sendMessage(message, clientUser));
+};
   return (
     <div className="flex w-screen h-screen justify-center items-center mt-10 gap-4 bg-orange-200 ">
       <div className="flex flex-col bg-red-400 items-center p-2 justify-center w-1/4 gap-6 rounded-2xl">
@@ -45,11 +60,13 @@ export default function ChatPage() {
         {dataPercakapan.map((el, index) => {
           return (
             <div key={index}>
-              <ChatBubbleLeft props={el} />
+              <ChatBubbleRight props={el} />
             </div>
           );
         })}
-        <ChatBubbleRight />
+        <ChatBubbleLeft />
+        <ChatBubbleLeft />
+        <ChatBubbleLeft />
 
         <form onSubmit={sendHandler} className="flex gap-4">
           <input

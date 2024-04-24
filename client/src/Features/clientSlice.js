@@ -53,41 +53,43 @@ export const login = (user, navigate) => {
     }
 }
 
-export const sendMessage = (message) => {
+export const sendMessage = (message, user) => {
     return async (dispatch) => {
         try {
-            const {data} = await axios({
-                method:"post",
-                url:"/conversations/1/messages/15",// ini masih hardcode juga
-                data:{message},
-                headers:{
-                    Authorization:"Bearer " + localStorage.getItem("access_token")
-                }
-            })
+            console.log(user, `<< slice <<< send message dari yang login `);
+            const response = await axios({
+                method: "post",
+                url: `/conversations/${user.conversationId}/messages/${user.receiverId}`,
+                data: { message },
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token"),
+                },
+            });
 
-            //socket.emit supaya server tahu kaapn kasih tau kesemuanya
+            if (response.data) {
+                // If data is present in the response, handle it accordingly
+                console.log("Data received from server:", response.data);
+            } else {
+                console.log("No data received from server");
+            }
 
-            socket.emit("newMessage")
+            // Emit event to notify server about the new message
+            socket.emit("newMessage", localStorage.getItem("access_token"));
 
-            console.log(data,`pesan di slice`);
-
+            // Optionally, you can dispatch an action or handle the response data here
         } catch (error) {
-            Swal.fire({
-                title: 'Error!',
-                text: error.response.data.message,
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              })
+            console.error("Error in sendMessage:", error);
+            // Optionally, dispatch an action or show an error message to the user
         }
-    }
-}
+    };
+};
 
-export const myConversation = () => {
+export const myConversation = (conversationId) => {
     return async (dispatch) => {
         try {
             const {data} = await axios({
                 method:"get",
-                url:"/conversations/1/messages",  // ini masih hardcode :conversationId
+                url:`/conversations/${conversationId}/messages`,  // ini masih hardcode :conversationId
                 headers: {
                     Authorization:"Bearer " + localStorage.getItem("access_token")
                 }
