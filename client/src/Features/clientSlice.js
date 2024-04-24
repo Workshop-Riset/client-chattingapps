@@ -36,7 +36,7 @@ export const login = (user, navigate) => {
             // dispatch(setClient())
             localStorage.setItem("access_token", response.data.accessToken)
             
-            navigate("/chat")
+            navigate("/")
         } catch (error) {
             Swal.fire({
                 title: 'Error!',

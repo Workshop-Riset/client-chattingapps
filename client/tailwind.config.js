@@ -3,11 +3,10 @@ export default {
   content: [],
   theme: {
     extend: {
-      fontFamily : {
-        sans : ['Inter var']
-      }
+      themes: ["light", "dark", "cupcake"],
     },
   },
   plugins: [require("daisyui")],
+ 
 }
 
