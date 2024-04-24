@@ -1,62 +1,41 @@
-export default function Navbar() {
-  return (
-    <div className=" flex justify-center ">
-      <nav className="bg-gray-900 border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a>
-            <img
-              src="https://play-lh.googleusercontent.com/Fro4e_osoDhhrjgiZ_Y2C5FNXBMWvrb4rGpmkM1PDAcUPXeiAlPCq7NeaT4Q6NRUxRqo"
-              className="h-8 rounded"
-            />
-          </a>
+import React from 'react';
+import { Nav, Navbar, Container, Button } from 'react-bootstrap';
+import { IoMdContacts } from "react-icons/io";
+import { IoHomeOutline } from "react-icons/io5";
+import { BiConversation } from "react-icons/bi";
+import { FaUser } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className=" bg-gray-900 font-medium flex flex-row p-4  rounded-lg bg-gray-50 ">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 text-white"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 text-white"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 text-white"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 text-white"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 text-white"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
+export default function NavigationBar() {
+  const menus = [
+    { name: "contact", link: "/contact", icon: IoMdContacts },
+    { name: "conversation", link: "/conversation", icon: BiConversation },
+    { name: "profile", link: "/profile", icon: FaUser },
+    { name: "Add Contact", link: "/room-chat", icon: IoMdContacts },
+  ];
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    localStorage.removeItem('access_token')
+    navigate('/login')
+  };
+
+  return (
+    <>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="/">Chatting</Navbar.Brand>
+          <Nav className="me-auto">
+            {menus.map((menu, index) => (
+              <Nav.Link key={index} href={menu.link}>
+                <span style={{ marginRight: '5px' }}>{menu.name.charAt(0).toUpperCase() + menu.name.slice(1)}</span>
+              </Nav.Link>
+            ))}
+          </Nav>
+          <Nav>
+            <Button onClick={handleLogout} variant='danger'>Logout</Button>
+          </Nav>
+        </Container>
+      </Navbar>
+    </>
   );
 }
