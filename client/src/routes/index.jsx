@@ -1,12 +1,12 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import Login from "../Pages/Login";
 import MainLayout from "./MainLayout";
-import ChatPage from "../Pages/ChatPage";
-import RegisterPage from "../Pages/RegisterPage";
+
 import Contact from "../Pages/Contact";
 import Conversation from "../Pages/Conversation";
 import Profile from "../Pages/Profile";
 import Home from "../Pages/Home";
+import Register from "../Pages/Register";
 async function GuardNavigation() {
   //ini di taruh di loader login/register
   if (localStorage.access_token) {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
     loader : GuardNavigation
-  },
+  },{
     path:"/register",
     element:<Register/>,
     loader : GuardNavigation
