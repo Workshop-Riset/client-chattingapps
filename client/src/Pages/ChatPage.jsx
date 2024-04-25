@@ -1,49 +1,66 @@
-import { useEffect, useState } from "react";
-import ChatBubbleLeft from "../Components/ChatBubble-1";
-import ChatBubbleRight from "../Components/ChatBubbleRight";
-import Friends from "../Components/Friends";
-import socket from "../socket";
-import { useDispatch, useSelector } from "react-redux";
-import { myConversation, sendMessage } from "../Features/clientSlice";
+import { useEffect, useState } from "react"
+import ChatBubbleLeft from "../Components/ChatBubble-1"
+import ChatBubbleRight from "../Components/ChatBubbleRight"
+import Friends from "../Components/Friends"
+import socket from "../socket"
+import { useDispatch, useSelector } from "react-redux"
+import { myConversation, sendMessage } from "../Features/clientSlice"
 
 export default function ChatPage() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("")
   const [clientUser, setClientUser] = useState()
 
-  console.log(clientUser, `di chatpage yang login`);
+  // console.log(clientUser, `di chatpage yang login`)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const dataPercakapan = useSelector((state) => state.client.list);
-  
+  const dataPercakapan = useSelector((state) => state.client.list)
+
+  // useEffect(() => {
+  //   socket.connect()
+
+  //   //pertama setelah buka page
+  //   socket.on("startConversation", () => {
+  //     let token = localStorage.getItem("access_token")
+
+  //     socket.emit("goConversation", token)
+  //   })
+
+  //   socket.on("runConversation", async (user) => {
+  //     console.log(
+  //       user.conversationId, `<< ini conv id`,
+  //       user.receiverId, `<< receiver id`
+  //     )
+  //     setClientUser(user)
+  //     dispatch(myConversation(user.conversationId))
+  //   })
+
+  //   // dari server fetch setelah kirim pesann
+  //   socket.on("fetchMessage", (user) => {
+  //     dispatch(myConversation(user.conversationId))
+  //   })
+  // }, [])
+ 
+  let a = 0
+
+  // const sendHandler = async (event) => {
+  //   event.preventDefault()
+  //   dispatch(sendMessage(message, clientUser))
+  // }
+
   useEffect(() => {
-    socket.connect();
+    socket.connect()
 
-    //pertama setelah buka page
-    socket.on("startConversation", () => {
-      let token = localStorage.getItem("access_token");
-
-      socket.emit("goConversation", token);
-    });
-
-    socket.on("runConversation", async (user) => {
-        console.log(user.conversationId, `<< ini conv id`, user.receiverId, `<< receiver id`);
-        setClientUser(user)
-        dispatch(myConversation(user.conversationId))
-    });
-
-    // dari server fetch setelah kirim pesann
-    socket.on("fetchMessage", (user) => {
-        dispatch(myConversation(user.conversationId));
-      });
-  
-  }, []);
+    console.log(`di client connect server`);
 
 
-const sendHandler = async (event) => {
-    event.preventDefault();
-    dispatch(sendMessage(message, clientUser));
-};
+  },[])
+
+  const sendHandler = async (event) => {
+    event.preventDefault()
+    dispatch(sendMessage(message))
+  }
+
   return (
     <div className="flex w-screen h-screen justify-center items-center mt-10 gap-4 bg-orange-200 ">
       <div className="flex flex-col bg-red-400 items-center p-2 justify-center w-1/4 gap-6 rounded-2xl">
@@ -60,13 +77,14 @@ const sendHandler = async (event) => {
         {dataPercakapan.map((el, index) => {
           return (
             <div key={index}>
-              <ChatBubbleRight props={el} />
+              {index % 2 === 0 ? ( // Check if index is even
+                <ChatBubbleRight props={el} />
+              ) : (
+                <ChatBubbleLeft />
+              )}
             </div>
-          );
+          )
         })}
-        <ChatBubbleLeft />
-        <ChatBubbleLeft />
-        <ChatBubbleLeft />
 
         <form onSubmit={sendHandler} className="flex gap-4">
           <input
@@ -91,5 +109,5 @@ const sendHandler = async (event) => {
         </div>
       </div>
     </div>
-  );
+  )
 }
