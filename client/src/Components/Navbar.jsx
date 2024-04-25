@@ -9,10 +9,7 @@ import socket from '../socket';
 
 export default function NavigationBar() {
   const menus = [
-    { name: "contact", link: "/contact", icon: IoMdContacts },
-    { name: "conversation", link: "/conversation", icon: BiConversation },
     { name: "profile", link: "/profile", icon: FaUser },
-    { name: "Add Contact", link: "/room-chat", icon: IoMdContacts },
   ];
   const navigate = useNavigate()
   const handleLogout = () => {

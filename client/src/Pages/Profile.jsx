@@ -1,18 +1,20 @@
 import axios from "../config/instance";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from 'sweetalert2'
 
 export default function Profile() {
   const [data, setData] = useState({});
   const [profile, setProfile] = useState({});
-
+  const [loading, setLoading] = useState(false)
   const goUpload = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true)
       const formData = new FormData();
       formData.append("foto", data);
 
-      await axios({
+       await axios({
         method: "patch",
         url: `/profiles/upload-img`,
         data: formData,
@@ -20,10 +22,24 @@ export default function Profile() {
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
       });
-
+      Swal.fire({
+        title: 'Success Upload Image!',
+        text: 'Success Upload Img',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
       navigate("/profiles");
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: 'Error!',
+        text: error.response.data.message,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+      setLoading(false)
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -57,6 +73,11 @@ export default function Profile() {
   return (
     <>
       <div className="flex justify-center">
+        {loading ? (
+          <div class="spinner-border text-center mr-4" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        ) : ''}
         <div className="flex flex-col max-w-2xl mx-4 sm:max-w-sm md:max-w-sm lg:max-w-sm xl:max-w-sm sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900 justify-center items-center">
           <div className="rounded-t-lg h-32 overflow-hidden">
             <img
@@ -68,15 +89,15 @@ export default function Profile() {
           <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
             <img
               className="object-cover object-center h-32"
-              src={profile.photoProfile}
+              src={profile?.photoProfile}
               alt=""
             />
           </div>
           <div className="text-center mt-2">
-            <h2 className="font-semibold">Sarah Smith</h2>
+            <h2 className="font-semibold">{profile?.fullName}</h2>
             <div>
-              <h1 className="font-normal text-base"> Bio: {profile.bio} </h1>
-              <h1 className="font-normal text-base"> Address: {profile.address} </h1>
+              <h1 className="font-normal text-base"> Bio: {profile?.bio} </h1>
+              <h1 className="font-normal text-base"> Address: {profile?.address} </h1>
             </div>
           </div>
 
