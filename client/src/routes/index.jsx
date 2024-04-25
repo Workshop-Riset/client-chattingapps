@@ -7,6 +7,7 @@ import Contact from "../Pages/Contact";
 import Conversation from "../Pages/Conversation";
 import Profile from "../Pages/Profile";
 import Home from "../Pages/Home";
+import Register from "../Pages/Register";
 async function GuardNavigation() {
   //ini di taruh di loader login/register
   if (localStorage.access_token) {
@@ -24,33 +25,38 @@ async function unGuardNavigation() {
 }
 const router = createBrowserRouter([
   {
-    path : '/',
-    element : <MainLayout />,
-    loader : unGuardNavigation,
-    children : [{
-      path : '',
-      element : <Home />
-    },{
-      path : '/contact',
-      element : <Contact />
-    },{
-      path : '/conversation',
-      element : <Conversation />
-    },{
-      path : '/profile',
-      element : <Profile />
-    }]
+    path: "/",
+    element: <MainLayout />,
+    loader: unGuardNavigation,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/conversation",
+        element: <Conversation />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+    ],
   },
   {
     path: "/login",
     element: <Login />,
-    loader : GuardNavigation
-  },{
-    path:"/register",
-    element:<Register/>,
-    loader : GuardNavigation
-  }
-],
-);
+    loader: GuardNavigation,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    loader: GuardNavigation,
+  },
+]);
 
 export default router;

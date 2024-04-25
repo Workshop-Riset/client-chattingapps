@@ -1,5 +1,5 @@
 export default function SenderChat({ msgnya }) {
-  const date = new Date(msgnya.timestamp);
+  const date = new Date();
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? 'PM' : 'AM';
