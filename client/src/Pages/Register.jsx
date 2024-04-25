@@ -10,6 +10,7 @@ export default function Register() {
     disbaled: "#090909"
   }
   
+  
 
   const navigate = useNavigate();
 
