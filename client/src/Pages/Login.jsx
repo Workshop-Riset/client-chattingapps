@@ -34,7 +34,7 @@ export default function Login() {
     console.log(data)
     localStorage.access_token = data.accessToken
 
-    navigate("/");
+    navigate("/chats");
   }
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Login() {
       })
       google.accounts.id.renderButton(
         document.getElementById("buttonDiv"),
-        { theme: "outline", size: "large" }
+        { theme: "outline", size: "large" } 
       )
       google.accounts.id.prompt()
     }
