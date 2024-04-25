@@ -9,7 +9,7 @@ export default function Register() {
     background: "#E0E0E0",
     disbaled: "#090909"
   }
-  
+
   
 
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function Register() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  
 
   const inputHandler = (event) => {
     const { name, value } = event.target;
