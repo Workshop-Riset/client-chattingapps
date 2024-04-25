@@ -1,23 +1,47 @@
 
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ContexStore } from "../Store/ContexStore";
 import Conversation from './Conversation';
 import Message from './Message';
+import socket from '../socket';
 
 export default function Home() {
   const state = useContext(ContexStore)
-  console.log(state.message.message,'<<<<pesan nya');
-  console.log(state.message.receiverName,'<<<<penerima nya');
-  console.log(state.message.receiverId,'<<<<penerima id');
-  console.log(state.message.id,'<<<<conversation id');
+  const [inputMessage, setInputMessage] = useState("");
+  const [allMessages, setAllMessages] = useState([]);
+  const { onlineUsers, setOnlineUsers } = useContext(ContexStore);
+
+  
+
+  useEffect(() => {
+    socket.auth = {
+      token: localStorage.access_token,
+    };
+
+    socket.connect();
+
+    socket.on("message:new", (value) => {
+      console.log(value, "<< new message");
+      setAllMessages(value);
+    });
+    socket.on("users:online", (value) => {
+      console.log(value, "< online users");
+      setOnlineUsers(value);
+    });
+
+    return () => {
+      socket.off("users:online"); 
+      socket.off("message:new");
+    };
+  }, []);
   return (
     <div className="container-fluid vh-100 wh-100" style={{ backgroundColor: "#EEEEEE" }}>
       <div className="d-flex row vh-100 wh-100" style={{ backgroundColor: "" }}>
         {/* conversation list */}
-        <Conversation />
+        <Conversation onlineUsers={onlineUsers}/>
         {/* end conversation list */}
         {/* messangger */}
-        <Message message={state.message.message} receiverName={state.message.receiverName} receiverId={state.message.receiverId} conversationId={state.message.id}/>
+        <Message inputMessage={inputMessage} setInputMessage={setInputMessage} allMessages={allMessages}/>
         {/* end messagge */}
       </div>
     </div>

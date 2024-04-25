@@ -5,6 +5,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { BiConversation } from "react-icons/bi";
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import socket from '../socket';
 
 export default function NavigationBar() {
   const menus = [
@@ -15,6 +16,7 @@ export default function NavigationBar() {
   ];
   const navigate = useNavigate()
   const handleLogout = () => {
+    socket.disconnect()
     localStorage.removeItem('access_token')
     navigate('/login')
   };

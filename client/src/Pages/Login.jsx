@@ -64,6 +64,7 @@ export default function Login() {
 
   const loginUser = (event) => {
     event.preventDefault();
+    console.log('handler ga ini bro, login page');
     dispatch(login(user, navigate));
   };
 
