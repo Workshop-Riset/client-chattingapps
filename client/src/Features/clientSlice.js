@@ -31,13 +31,13 @@ export const login = (user, navigate) => {
                 icon: 'success',
                 confirmButtonText: 'Ok'
               })
-
             // console.log(response);
             // dispatch(setClient())
             localStorage.setItem("access_token", response.data.accessToken)
             
             navigate("/")
         } catch (error) {
+            console.log(error, '<<<<<<<');
             Swal.fire({
                 title: 'Error!',
                 text: error.response.data.message,
