@@ -9,6 +9,7 @@ export default function Register() {
     background: "#E0E0E0",
     disbaled: "#090909"
   }
+  
 
   const navigate = useNavigate();
 
